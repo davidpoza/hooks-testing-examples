@@ -1,5 +1,5 @@
-import { renderHook } from "@testing-library/react-hooks";
-import useCachedFetch from "./useCachedFetch";
+import { renderHook } from '@testing-library/react-hooks';
+import useCachedFetch from './useCachedFetch';
 
 function fetchMock(url) {
   return new Promise((resolve) =>
