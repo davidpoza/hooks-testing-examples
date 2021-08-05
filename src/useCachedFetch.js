@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 const CACHE = {};
 
-export default function useCachedFetch(url, defaultValue = [], ttl = 0.1) {
+export default function useCachedFetch(url, defaultValue = [], ttl = 5) {
   const [data, setData] = useState(defaultValue);
   const [isLoading, setLoading] = useState(true);
 

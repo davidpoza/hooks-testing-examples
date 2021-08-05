@@ -1,7 +1,7 @@
 import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
-import useStaleRefresh from "./useCachedFetch";
+import useCachedFetch from "./useCachedFetch";
 
 function fetchMock(url) {
   return new Promise((resolve) =>
@@ -90,7 +90,7 @@ it('useCachedFetch works', async () => {
 
   // comprobamos que mientras dura la carga, la propiedad isLoading is true, pero cuando acaba es false
 
-  const { rerender, result } = renderHook(useStaleRefresh, [
+  const { rerender, result } = renderHook(useCachedFetch, [
     'url1',
     defaultValue,
   ]);
@@ -112,23 +112,23 @@ it('useCachedFetch works', async () => {
   );
 
   // comprobamos que cuando los datos de la petición cambian y la cache caduca, esta se actualiza
-  // global.fetch.mockImplementation((url) => fetchMock(`${url}_modified`));
+  global.fetch.mockImplementation((url) => fetchMock(`${url}_modified`));
 
-  // // set url to url1 again
-  // rerender(['url1', defaultValue]);
-  // expect(result.current[0].data).toBe('data_from_url1');
-  // await act(() =>
-  //   waitFor(() => {
-  //     expect(result.current[0].data).toBe('data_from_url1_modified');
-  //   })
-  // );
+  // set url to url1 again
+  rerender(['url1', defaultValue]);
+  expect(result.current[0].data).toBe('data_from_url1');
+  await act(() =>
+    waitFor(() => {
+      expect(result.current[0].data).toBe('data_from_url1_modified');
+    })
+  );
 
-  // // set url to url2 again
-  // rerender(['url2', defaultValue]);
-  // expect(result.current[0].data).toBe('data_from_url2');
-  // await act(() =>
-  //   waitFor(() => {
-  //     expect(result.current[0].data).toBe('data_from_url2_modified');
-  //   })
-  // );
+  // set url to url2 again
+  rerender(['url2', defaultValue]);
+  expect(result.current[0].data).toBe('data_from_url2');
+  await act(() =>
+    waitFor(() => {
+      expect(result.current[0].data).toBe('data_from_url2_modified');
+    })
+  );
 });

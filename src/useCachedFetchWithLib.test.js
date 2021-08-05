@@ -56,7 +56,7 @@ it('useCachedFetch works', async () => {
   expect(result.current[1]).toBe(true); // is loading
 
   await waitForNextUpdate(() => {
-    expect(result.current[0].data).toEqual('url2');
+    expect(result.current[0].data).toEqual('data_from_url2');
   }, { timeout: 800 });
   expect(result.current[1]).toBe(false); // is not loading
 
